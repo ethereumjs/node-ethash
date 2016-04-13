@@ -1,0 +1,3 @@
+[submodule "ethash-src"]
+	path = src/ethash-src
+	url = https://github.com/ethereum/ethash
