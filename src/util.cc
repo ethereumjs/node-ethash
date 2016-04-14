@@ -1,10 +1,13 @@
 #include "util.h"
 
+// TODO: Clean up conversion functions!
+
 // some functions taken from eth::dev for convenience.
 std::string bytesToHexString(const uint8_t *str, const uint64_t s)
 {
 	std::ostringstream ret;
 
+	ret << "0x";
 	for (size_t i = 0; i < s; ++i)
 		ret << std::hex << std::setfill('0') << std::setw(2) << std::nouppercase << (int) str[i];
 

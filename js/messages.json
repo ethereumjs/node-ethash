@@ -1,0 +1,8 @@
+{
+  "BLOCKNUM_TYPE_INVALID": "block_number should be a number",
+  "HEADERASH_TYPE_INVALID": "header_hash should be a String",
+  "HEADERASH_LENGTH_INVALID": "header_hash must be between [1, 66] bytes long",
+  "NONCE_TYPE_INVALID": "nonce should be a number",
+  "LIGHTNEW_NOMEM": "not enough memory for ethash_light_new()",
+  "LIGHTNEW_ERROR": "error processing ethash_light_compute()"
+}
