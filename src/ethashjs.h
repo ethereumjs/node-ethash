@@ -5,5 +5,7 @@
 #include <nan.h>
 
 NAN_METHOD(ethash_light_compute);
+NAN_METHOD(ethash_light_new_internal);
+NAN_METHOD(ethash_light_compute_internal);
 
 #endif

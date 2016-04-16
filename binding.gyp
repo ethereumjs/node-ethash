@@ -3,7 +3,6 @@
     "target_name": "ethash",
     "sources": [
 		"./src/ethash.cc",
-		"./src/util.cc",
 	    "./src/ethash-src/src/libethash/io.c",
 	    "./src/ethash-src/src/libethash/internal.c",
 		"./src/ethash-src/src/libethash/sha3.c"

@@ -1,8 +1,17 @@
 {
   "BLOCKNUM_TYPE_INVALID": "block_number should be a number",
-  "HEADERASH_TYPE_INVALID": "header_hash should be a String",
-  "HEADERASH_LENGTH_INVALID": "header_hash must be between [1, 66] bytes long",
-  "NONCE_TYPE_INVALID": "nonce should be a number",
+
+  "HEADERHASH_TYPE_INVALID": "header_hash should be a Buffer",
+  "HEADERHASH_LENGTH_INVALID": "header_hash should be 32 bytes long",
+
+  "NONCE_TYPE_INVALID": "nonce should be a Buffer",
+  "NONCE_LENGTH_INVALID": "nonce should be 8 bytes long",
+
+  "CACHESIZE_TYPE_INVALID": "cache_size should be a Number",
+
+  "SEED_TYPE_INVALID": "seed should be a Buffer",
+  "SEED_LENGTH_INVALID": "seed should be 32 bytes long",
+  
   "LIGHTNEW_NOMEM": "not enough memory for ethash_light_new()",
   "LIGHTNEW_ERROR": "error processing ethash_light_compute()"
 }

@@ -16,12 +16,6 @@ using namespace std;
 using byte = uint8_t;
 using bytes = std::vector<byte>;
 
-// TODO: Clean up conversion functions!
-
-std::string blockhashToHexString(ethash_h256_t* _hash);
-
-ethash_h256_t stringToBlockhash(std::string const& _s);
-
 #define COPY_BUFFER(data, datalen) Nan::CopyBuffer((const char*) data, datalen).ToLocalChecked()
 
 #define UPDATE_COMPRESSED_VALUE(compressed, value, v_true, v_false) {          \
