@@ -12,7 +12,7 @@ and ethereumjs/ethashjs (https://github.com/ethereumjs/ethashjs).
 ## Installation
 
 ```
-$
+$ git clone https://github.com/bolaum/node-ethash
 $ cd node-ethash/
 $ git submodule init
 $ git submodule update
@@ -21,7 +21,7 @@ $ npm install
 
 ## API
 
-- [`new Ethash()`](#newethashcachedb)
+- [`new Ethash()`](#newethash)
 - [`ethash.mkcache(cacheSize, seed)`](#ethashmkcachecachesize-seed)
 - [`ethash.run(val, nonce, fullsize)`](#ethashrunval-nonce-fullsize)
 
@@ -38,7 +38,8 @@ Creates a cache.
 ### `ethash.run(val, nonce, fullsize)`
 Runs ethash on a give val/nonce pair.
 
-NOTE: you need to run [`ethash.mkcache(cacheSize, seed)`](#ethashmkcachecachesize-seed) first before using this function.
+NOTE: you need to run [`ethash.mkcache(cacheSize, seed)`](#ethashmkcachecachesize-seed)
+first before using this function.
 
 **Parameters**
 - `val` - header hash as `Buffer`
