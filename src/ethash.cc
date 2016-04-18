@@ -10,6 +10,7 @@
 #define node node_eth
 #include "libethash/internal.h"
 #undef node
+#define node node
 
 // ethash_light_new(block_number)
 // returns: { block_number: Number, cache: Buffer }
@@ -107,8 +108,27 @@ NAN_METHOD(ethash_light_new_internal) {
 	// node -> C
 	ethash_h256_t *seed = (ethash_h256_t *) node::Buffer::Data(seed_v8);
 
-	// get new cache
+  // Frustrated attempt on optimizing buffer creation to avoid copying =/
+  // ethash_compute_cache_nodes() is static and can't be used inside _light_new_internal()
+  // left here to aid future attempts {
+  //
+  // // get a buffer for cache
+  // v8::Local<v8::Object> buf = Nan::NewBuffer(cache_size).ToLocalChecked();
+  // // local light structure
+  // struct ethash_light light;
+  //
+	// // get new cache
+  // _light_new_internal(node::Buffer::Data(buf), &light, cache_size, seed);
+  //
+  // // C -> node
+  // info.GetReturnValue().Set(buf);
+  // }
+
+  // let there be light
 	ethash_light_t light = ethash_light_new_internal(cache_size, seed);
+  if (light == NULL) {
+		return Nan::ThrowError(LIGHTNEW_NOMEM);
+	}
 
 	// C -> node
 	info.GetReturnValue().Set(COPY_BUFFER((const char *)light->cache, light->cache_size));

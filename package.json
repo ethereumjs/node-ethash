@@ -1,7 +1,21 @@
 {
   "name": "node-ethash",
-  "version": "0.0.1",
+  "version": "0.8.0",
   "description": "Native node bindings for ethash",
+  "keywords": [
+    "ethash",
+    "ethereum",
+    "POW"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bolaum/node-ethash.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bolaum/node-ethash/issues"
+  },
+  "author": "Thiago Borges Abdnur <bolaum@gmail.com>",
+  "license": "MIT",
   "main": "./js/bindings.js",
   "scripts": {
     "clean": "node-gyp clean",
@@ -12,8 +26,6 @@
     "test": "npm run test:node",
     "test:node": "istanbul test node_modules/mocha/bin/_mocha -- --reporter spec test/index.js"
   },
-  "author": "Thiago Borges Abdnur <bolaum@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "bindings": "^1.2.1",
     "ethereumjs-util": "^4.3.0",
