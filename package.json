@@ -5,8 +5,9 @@
   "main": "./js/bindings.js",
   "scripts": {
     "clean": "node-gyp clean",
-    "install": "npm run rebuild",
-    "rebuild": "node-gyp rebuild",
+    "build": "node-gyp rebuild",
+    "install": "npm run build",
+    "rebuild": "npm run build",
     "lint": "standard",
     "test": "npm run test:node",
     "test:node": "istanbul test node_modules/mocha/bin/_mocha -- --reporter spec test/index.js"
@@ -27,7 +28,6 @@
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "node-gyp": "^3.3.1",
-    "progress": "^1.1.8",
     "standard": "^6.0.8"
   },
   "standard": {

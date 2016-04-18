@@ -7,11 +7,16 @@
   "NONCE_TYPE_INVALID": "nonce should be a Buffer",
   "NONCE_LENGTH_INVALID": "nonce should be 8 bytes long",
 
+  "CACHE_TYPE_INVALID": "cache should be a Buffer",
   "CACHESIZE_TYPE_INVALID": "cache_size should be a Number",
 
   "SEED_TYPE_INVALID": "seed should be a Buffer",
   "SEED_LENGTH_INVALID": "seed should be 32 bytes long",
-  
+
+  "FULLSIZE_TYPE_INVALID": "full_size should be a number",
+
   "LIGHTNEW_NOMEM": "not enough memory for ethash_light_new()",
-  "LIGHTNEW_ERROR": "error processing ethash_light_compute()"
+  "LIGHTNEW_ERROR": "error processing ethash_light_compute()",
+
+  "LIGHT_OBJ_INVALID": "light should be { block_number: Number, cache: Buffer }"
 }
