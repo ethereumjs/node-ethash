@@ -6,7 +6,8 @@
 #include "util.h"
 #include "messages.h"
 #include "libethash/ethash.h"
-// hack to avoid conflict with 'node.h' namespace and 'node' declared inside internal.h
+// hack to avoid conflict between 'node.h' namespace and
+// 'node' declared inside internal.h
 #define node node_eth
 #include "libethash/internal.h"
 #undef node

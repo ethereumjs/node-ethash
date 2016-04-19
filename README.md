@@ -12,7 +12,7 @@ and ethereumjs/ethashjs (https://github.com/ethereumjs/ethashjs).
 ## Installation
 
 ```
-$ git clone https://github.com/bolaum/node-ethash
+$ git clone https://github.com/ethereumjs/node-ethash.git
 $ cd node-ethash/
 $ git submodule init
 $ git submodule update
