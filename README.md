@@ -21,15 +21,34 @@ $ npm install
 
 ## API
 
-- [`new Ethash()`](#newethash)
+- [`new Ethash([cacheDB])`](#newethashcachedb)
+- [`ethash.verifyPOW(block, cb)`](#ethashverifypowblock-cb)
 - [`ethash.mkcache(cacheSize, seed)`](#ethashmkcachecachesize-seed)
 - [`ethash.run(val, nonce, fullsize)`](#ethashrunval-nonce-fullsize)
+- [`ethash.loadEpoc(number, cb)`](#ethashloadepocnumber-cb)
 
-### `new Ethash()`
-Creates a new instance of `Ethash`. No support for cacheDB yet!
+### `new Ethash([cacheDB])`
+Creates a new instance of `Ethash`.
+
+**Parameters**
+- `cacheDB` - an instance of a levelup db which is used to store the cache(s). Need by
+[`ethash.verifyPOW()`](#ethashverifypowblock-cb) and
+[`ethash.loadEpoc()`](#ethashloadepocnumber-cb)
+
+### `ethash.verifyPOW(block, cb)`
+Verifies the POW on a block and its uncles.
+
+Note: uses [`ethash.loadEpoc()`](#ethashloadepocnumber-cb) to load cache.
+
+**Parameters**  
+- `block` - the [block](https://github.com/ethereum/ethereumjs-block) to verify
+- `cb` - the callback which is given a `Boolean` determining the validity of the block
 
 ### `ethash.mkcache(cacheSize, seed)`
 Creates a cache.
+
+NOTE: this is automatically done for in  - [`ethash.verifyPOW()`](#ethashverifypowblock-cb)
+so you do not need to use this function if you are just validating blocks.
 
 **Parameters**
 - `cacheSize` - the size of the cache
@@ -38,18 +57,25 @@ Creates a cache.
 ### `ethash.run(val, nonce, fullsize)`
 Runs ethash on a give val/nonce pair.
 
-NOTE: you need to run [`ethash.mkcache(cacheSize, seed)`](#ethashmkcachecachesize-seed)
+NOTE: you need to run [`ethash.mkcache()`](#ethashmkcachecachesize-seed)
 first before using this function.
 
 **Parameters**
 - `val` - header hash as `Buffer`
 - `seed` - the seed as a `Buffer`
-- `fullsize` - the fullsize of the cache.
+- `fullsize` - the fullsize of the cache
 
 **Return**
 and `Object` containing
 - `hash`  - the hash of the value
 - `mix` - the mix result
+
+### `ethash.loadEpoc(number, cb)`
+Loads block number epoc cache from DB.
+
+**Parameters**  
+- `number` - the [block's](https://github.com/ethereum/ethereumjs-block) number
+- `cb` - callback called after the epoc was loaded
 
 ## Test
 `$ npm test`
@@ -72,8 +98,10 @@ ethashjs x 17.82 ops/sec ±1.58% (48 runs sampled)
 ```
 
 ## TODO:
-- Support `cacheDB`
-- Implement `verifyPOW()`
+- Implement tests for:
+  - [`ethash.verifyPOW()`](#ethashverifypowblock-cb)
+  - [`ethash.loadEpoc()`](#ethashloadepocnumber-cb)
+- Create more fixtures for [`ethash.run()`](#ethashrunval-nonce-fullsize)'s tests
 
 ## LICENSE
 

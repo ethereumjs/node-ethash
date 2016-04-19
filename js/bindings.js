@@ -7,8 +7,6 @@ const ethashcpp = require('bindings')('ethash')
 
 var messages = require('./messages')
 
-// TODO: cacheDB support
-
 var Ethash = module.exports = function (cacheDB) {
   this.dbOpts = {
     valueEncoding: 'json'
@@ -36,7 +34,7 @@ Ethash.prototype.ethash_light_compute = function (light, header_hash, nonce) {
 Ethash.prototype.mkcache = function (cacheSize, seed) {
   // get new cache from cpp
   this.cache = ethashcpp.ethash_light_new_internal(cacheSize, seed)
-
+  // cache is a single Buffer here! Not an array of cache lines.
   return this.cache
 }
 
@@ -62,7 +60,7 @@ Ethash.prototype.cacheHash = function () {
  * Loads the seed and the cache given a block nnumber
  * @method loadEpoc
  * @param number Number
- * @param cm function
+ * @param cb function
  */
 Ethash.prototype.loadEpoc = function (number, cb) {
   var self = this
@@ -108,6 +106,7 @@ Ethash.prototype.loadEpoc = function (number, cb) {
       })
     } else {
       // Object.assign(self, data)
+      // cache is a single Buffer here! Not an array of cache lines.
       self.cache = data.cache
       self.cacheSize = data.cacheSize
       self.fullSize = data.fullSize
