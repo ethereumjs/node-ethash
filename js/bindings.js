@@ -35,20 +35,7 @@ Ethash.prototype.ethash_light_compute = function (light, header_hash, nonce) {
 // returns: arrays of cache lines
 Ethash.prototype.mkcache = function (cacheSize, seed) {
   // get new cache from cpp
-  var rcache = ethashcpp.ethash_light_new_internal(cacheSize, seed)
-  // hash size
-  var hsize = ethHashUtil.params.HASH_BYTES
-  // get number of cache lines
-  const n = Math.floor(cacheSize / hsize)
-  // split cache (one array per line)
-  var cache = []
-  for (var i = 0; i < n; i++) {
-    cache.push(rcache.slice(i * hsize, (i * hsize) + hsize))
-  }
-
-  // set local cache
-  this.rcache = rcache
-  this.cache = cache
+  this.cache = ethashcpp.ethash_light_new_internal(cacheSize, seed)
 
   return this.cache
 }
@@ -57,7 +44,7 @@ Ethash.prototype.mkcache = function (cacheSize, seed) {
 // returns: { mix: Buffer, hash: buffer }
 Ethash.prototype.run = function (val, nonce, fullSize) {
   // get new cache from cpp
-  var ret = ethashcpp.ethash_light_compute_internal(this.rcache, fullSize, val, nonce)
+  var ret = ethashcpp.ethash_light_compute_internal(this.cache, fullSize, val, nonce)
 
   return {
     mix: ret.mix_hash,
@@ -68,5 +55,69 @@ Ethash.prototype.run = function (val, nonce, fullSize) {
 Ethash.prototype.headerHash = ethashjs.prototype.headerHash
 
 Ethash.prototype.cacheHash = function () {
-  return ethUtil.sha3(this.rcache)
+  return ethUtil.sha3(this.cache)
 }
+
+/**
+ * Loads the seed and the cache given a block nnumber
+ * @method loadEpoc
+ * @param number Number
+ * @param cm function
+ */
+Ethash.prototype.loadEpoc = function (number, cb) {
+  var self = this
+  const epoc = ethHashUtil.getEpoc(number)
+
+  if (this.epoc === epoc) {
+    return cb()
+  }
+
+  this.epoc = epoc
+
+  // gives the seed the first epoc found
+  function findLastSeed (epoc, cb2) {
+    if (epoc === 0) {
+      return cb2(ethUtil.zeros(32), 0)
+    }
+
+    self.cacheDB.get(epoc, self.dbOpts, function (err, data) {
+      if (!err) {
+        cb2(data.seed, epoc)
+      } else {
+        findLastSeed(epoc - 1, cb2)
+      }
+    })
+  }
+
+  /* eslint-disable handle-callback-err */
+  self.cacheDB.get(epoc, self.dbOpts, function (err, data) {
+    if (!data) {
+      self.cacheSize = ethHashUtil.getCacheSize(epoc)
+      self.fullSize = ethHashUtil.getFullSize(epoc)
+
+      findLastSeed(epoc, function (seed, foundEpoc) {
+        self.seed = ethHashUtil.getSeed(seed, foundEpoc, epoc)
+        var cache = self.mkcache(self.cacheSize, self.seed)
+        // store the generated cache
+        self.cacheDB.put(epoc, {
+          cacheSize: self.cacheSize,
+          fullSize: self.fullSize,
+          seed: self.seed,
+          cache: cache
+        }, self.dbOpts, cb)
+      })
+    } else {
+      // Object.assign(self, data)
+      self.cache = data.cache
+      self.cacheSize = data.cacheSize
+      self.fullSize = data.fullSize
+      self.seed = new Buffer(data.seed)
+      cb()
+    }
+  })
+  /* eslint-enable handle-callback-err */
+}
+
+Ethash.prototype._verifyPOW = ethashjs.prototype._verifyPOW
+
+Ethash.prototype.verifyPOW = ethashjs.prototype.verifyPOW
