@@ -24,15 +24,15 @@ $ npm install
 - [`new Ethash([cacheDB])`](#newethashcachedb)
 - [`ethash.verifyPOW(block, cb)`](#ethashverifypowblock-cb)
 - [`ethash.mkcache(cacheSize, seed)`](#ethashmkcachecachesize-seed)
-- [`ethash.run(val, nonce, fullsize)`](#ethashrunval-nonce-fullsize)
+- [`ethash.run(val, nonce, fullSize)`](#ethashrunval-nonce-fullsize)
 - [`ethash.loadEpoc(number, cb)`](#ethashloadepocnumber-cb)
 
 ### `new Ethash([cacheDB])`
 Creates a new instance of `Ethash`.
 
 **Parameters**
-- `cacheDB` - an instance of a levelup db which is used to store the cache(s). Need by
-[`ethash.verifyPOW()`](#ethashverifypowblock-cb) and
+- `cacheDB` - an instance of a `levelup` DB which is used to store the cache(s).
+Need by [`ethash.verifyPOW()`](#ethashverifypowblock-cb) and
 [`ethash.loadEpoc()`](#ethashloadepocnumber-cb)
 
 ### `ethash.verifyPOW(block, cb)`
@@ -42,20 +42,21 @@ Note: uses [`ethash.loadEpoc()`](#ethashloadepocnumber-cb) to load cache.
 
 **Parameters**  
 - `block` - the [block](https://github.com/ethereum/ethereumjs-block) to verify
-- `cb` - the callback which is given a `Boolean` determining the validity of the block
+- `cb` - callback which is given a `Boolean` determining the validity of the block
 
 ### `ethash.mkcache(cacheSize, seed)`
 Creates a cache.
 
-NOTE: this is automatically done for in  - [`ethash.verifyPOW()`](#ethashverifypowblock-cb)
+NOTE: this is automatically done for in
+[`ethash.verifyPOW()`](#ethashverifypowblock-cb)
 so you do not need to use this function if you are just validating blocks.
 
 **Parameters**
 - `cacheSize` - the size of the cache
 - `seed` - the seed as a `Buffer`
 
-### `ethash.run(val, nonce, fullsize)`
-Runs ethash on a give val/nonce pair.
+### `ethash.run(val, nonce, fullSize)`
+Runs ethash on a given val/nonce pair.
 
 NOTE: you need to run [`ethash.mkcache()`](#ethashmkcachecachesize-seed)
 first before using this function.
@@ -63,15 +64,15 @@ first before using this function.
 **Parameters**
 - `val` - header hash as `Buffer`
 - `seed` - the seed as a `Buffer`
-- `fullsize` - the fullsize of the cache
+- `fullSize` - the fullsize of the cache
 
 **Return**
-and `Object` containing
+an `Object` containing
 - `hash`  - the hash of the value
 - `mix` - the mix result
 
 ### `ethash.loadEpoc(number, cb)`
-Loads block number epoc cache from DB.
+Loads block number epoc's cache from DB.
 
 **Parameters**  
 - `number` - the [block's](https://github.com/ethereum/ethereumjs-block) number
