@@ -1,5 +1,5 @@
 #ifndef _ETHASH_NODE_UTIL_
-# define _ETHASH_NODE_UTIL_
+#define _ETHASH_NODE_UTIL_
 
 #include <sstream>
 #include <fstream>

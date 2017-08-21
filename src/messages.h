@@ -1,5 +1,5 @@
 #ifndef _ETHASH_NODE_MESSAGES_
-# define _ETHASH_NODE_MESSAGES_
+#define _ETHASH_NODE_MESSAGES_
 
 #define BLOCKNUM_TYPE_INVALID "block_number should be a number"
 
