@@ -35,7 +35,7 @@
   "devDependencies": {
     "benchmark": "^2.1.0",
     "chai": "^4.1.2",
-    "ethereumjs-block": "^1.2.2",
+    "ethereumjs-block": "^2.2.2",
     "ethereumjs-testing": "1.0.4",
     "istanbul": "^0.4.3",
     "mocha": "^3.1.2",
